@@ -37,8 +37,8 @@ class Headless(gr.top_block):
         # Blocks
         ##################################################
         self.rational_resampler_xxx_0 = filter.rational_resampler_ccc(
-                interpolation=121,
-                decimation=50,
+                interpolation=12,
+                decimation=5,
                 taps=None,
                 fractional_bw=None,
         )
