@@ -3,7 +3,7 @@
 ##################################################
 # GNU Radio Python Flow Graph
 # Title: Headless105 7
-# Generated: Sat Jul 20 09:27:50 2019
+# Generated: Sat Jul 27 12:48:04 2019
 ##################################################
 
 from gnuradio import analog
@@ -37,8 +37,8 @@ class headless105_7(gr.top_block):
         # Blocks
         ##################################################
         self.rational_resampler_xxx_0 = filter.rational_resampler_ccc(
-                interpolation=12,
-                decimation=5,
+                interpolation=121,
+                decimation=50,
                 taps=None,
                 fractional_bw=None,
         )
@@ -57,6 +57,8 @@ class headless105_7(gr.top_block):
           
         self.low_pass_filter_0 = filter.fir_filter_ccf(int(samp_rate/channel_width), firdes.low_pass(
         	1, samp_rate, 75e3, 25e3, firdes.WIN_HAMMING, 6.76))
+        self.high_pass_filter_0 = filter.fir_filter_fff(1, firdes.high_pass(
+        	1, 48e3, 150, 10, firdes.WIN_HAMMING, 6.76))
         self.blocks_multiply_xx_0 = blocks.multiply_vcc(1)
         self.blocks_multiply_const_vxx_0 = blocks.multiply_const_vff((1, ))
         self.audio_sink_0 = audio.sink(48000, "", True)
@@ -70,9 +72,10 @@ class headless105_7(gr.top_block):
         # Connections
         ##################################################
         self.connect((self.analog_sig_source_x_0, 0), (self.blocks_multiply_xx_0, 1))    
-        self.connect((self.analog_wfm_rcv_0, 0), (self.blocks_multiply_const_vxx_0, 0))    
+        self.connect((self.analog_wfm_rcv_0, 0), (self.high_pass_filter_0, 0))    
         self.connect((self.blocks_multiply_const_vxx_0, 0), (self.audio_sink_0, 0))    
         self.connect((self.blocks_multiply_xx_0, 0), (self.low_pass_filter_0, 0))    
+        self.connect((self.high_pass_filter_0, 0), (self.blocks_multiply_const_vxx_0, 0))    
         self.connect((self.low_pass_filter_0, 0), (self.rational_resampler_xxx_0, 0))    
         self.connect((self.osmosdr_source_0, 0), (self.blocks_multiply_xx_0, 0))    
         self.connect((self.rational_resampler_xxx_0, 0), (self.analog_wfm_rcv_0, 0))    
